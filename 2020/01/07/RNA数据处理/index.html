@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="需要下载的软件先conda create创建新环境，在新环境中进行工具的下载，conda解决一切环境问题。     下载SRA数据根据文章提供的GEO ID找到SRA的ID，再利用sra-tools的prefetch或者wget下载得到数据。 实际上更直接的方式是直接在ENA找到FASTQ文件。 数据转换：关于fastq-dump什么是fastq-dump？一个把sra文件转化为fastq格式的工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNA数据处理">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;07&#x2F;RNA%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86&#x2F;index.html">
+<meta property="og:site_name" content="hongfox&#39;s blog">
+<meta property="og:description" content="需要下载的软件先conda create创建新环境，在新环境中进行工具的下载，conda解决一切环境问题。     下载SRA数据根据文章提供的GEO ID找到SRA的ID，再利用sra-tools的prefetch或者wget下载得到数据。 实际上更直接的方式是直接在ENA找到FASTQ文件。 数据转换：关于fastq-dump什么是fastq-dump？一个把sra文件转化为fastq格式的工">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="c:&#x2F;Users&#x2F;52466&#x2F;AppData&#x2F;Roaming&#x2F;Typora&#x2F;typora-user-images&#x2F;1568019839906.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;learn.gencore.bio.nyu.edu&#x2F;wp-content&#x2F;uploads&#x2F;2018&#x2F;01&#x2F;Screen-Shot-2018-01-07-at-4.20.44-PM-1024x624.png">
+<meta property="og:image" content="c:&#x2F;Users&#x2F;52466&#x2F;AppData&#x2F;Roaming&#x2F;Typora&#x2F;typora-user-images&#x2F;1568107878902.png">
+<meta property="og:image" content="c:%5CUsers%5C52466%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1568117867231.png">
+<meta property="og:image" content="c:%5CUsers%5C52466%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1568107825145.png">
+<meta property="og:image" content="c:%5CUsers%5C52466%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1568120042088.png">
+<meta property="og:updated_time" content="2019-09-12T12:25:41.409Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:&#x2F;Users&#x2F;52466&#x2F;AppData&#x2F;Roaming&#x2F;Typora&#x2F;typora-user-images&#x2F;1568019839906.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/07/RNA数据处理/"/>
+
+
+
+
+
+  <title>RNA数据处理 | hongfox's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hongfox's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/07/RNA%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hongfox's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RNA数据处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-07T21:21:22+08:00">
+                2020-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="需要下载的软件"><a href="#需要下载的软件" class="headerlink" title="需要下载的软件"></a>需要下载的软件</h1><p>先conda create创建新环境，在新环境中进行工具的下载，conda解决一切环境问题。</p>
+<img src="C:\Users\52466\AppData\Roaming\Typora\typora-user-images\1568019839906.png" alt="1568019839906" align=left />
+
+
+
+<h1 id="下载SRA数据"><a href="#下载SRA数据" class="headerlink" title="下载SRA数据"></a>下载SRA数据</h1><p>根据文章提供的GEO ID找到SRA的ID，再利用sra-tools的prefetch或者wget下载得到数据。</p>
+<p>实际上更直接的方式是直接在ENA找到FASTQ文件。</p>
+<h1 id="数据转换：关于fastq-dump"><a href="#数据转换：关于fastq-dump" class="headerlink" title="数据转换：关于fastq-dump"></a>数据转换：关于fastq-dump</h1><h2 id="什么是fastq-dump？"><a href="#什么是fastq-dump？" class="headerlink" title="什么是fastq-dump？"></a>什么是fastq-dump？</h2><p><strong>一个把sra文件转化为fastq格式的工具。</strong></p>
+<p>实际上我们可以直接从<a href="https://www.ebi.ac.uk/ena" target="_blank" rel="noopener">ENA</a>(European Nucleotide Archive)直接下载fastq format的文件。</p>
+<p>教程请见：(<a href="https://www.biostars.org/p/325010/),关于如何使用aspera作为下载工具进行下载。" target="_blank" rel="noopener">https://www.biostars.org/p/325010/),关于如何使用aspera作为下载工具进行下载。</a></p>
+<p>现在sra-tools已经包含有fasterq-dump工具，这个工具相比于fastq-dump更快，但是不能压缩。</p>
+<h2 id="在Sra文件中什么是spot？"><a href="#在Sra文件中什么是spot？" class="headerlink" title="在Sra文件中什么是spot？"></a>在Sra文件中什么是spot？</h2><p>在 illumina 的测序中，tile即是“spot”，每一个spot中包含的信息包括坐标以及各种reads(technical reads)(adapters, primers, barcodes, etc).</p>
+<p><em>与 technical reads相对的reads是biological reads</em></p>
+<p>举个例子，一个spot中包含有6个bp的barcode,12个bp的primer,以及正反链。因此一共有四个reads.basecoord：起始位置。</p>
+<p>0 - barcode basecoord 1</p>
+<p>1 - primer  basecoord 7</p>
+<p>2 - forward basecoord 19</p>
+<p>3 - reverse basecoord 151</p>
+<p><img src="http://learn.gencore.bio.nyu.edu/wp-content/uploads/2018/01/Screen-Shot-2018-01-07-at-4.20.44-PM-1024x624.png" alt="img"></p>
+<h2 id="split-3-split-file-split-spot-的区别"><a href="#split-3-split-file-split-spot-的区别" class="headerlink" title="split-3,split-file,split-spot 的区别"></a>split-3,split-file,split-spot 的区别</h2><h3 id="1-split-spot"><a href="#1-split-spot" class="headerlink" title="1.split-spot"></a>1.split-spot</h3><p><code>--split-spot                     Split spots into individual reads</code></p>
+<p>–split-spot separates the read into left and right ends, and puts the reads in the <strong>same</strong> file. This creates a single file</p>
+<p>只产生一个文件，包含正反链。</p>
+<h3 id="2-split-file-不推荐"><a href="#2-split-file-不推荐" class="headerlink" title="2.split-file(不推荐)"></a>2.split-file(不推荐)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">--split-files                    Write reads into separate files. Read </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">                                   number will be suffixed to the file name.  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">                                   NOTE! The &#96;--split-3&#96; option is recommended. </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">                                   In cases where not all spots have the same </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">                                   number of reads, this option will produce </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">                                   files that WILL CAUSE ERRORS in most programs </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">                                   which process split pair fastq files.</span></pre></td></tr></table></figure>
+
+<p>–split-files separates the read into left and right ends, and puts the forward and reverse reads in two <strong>separate</strong> files. This creates two files.</p>
+<h3 id="3-split-3"><a href="#3-split-3" class="headerlink" title="3.split-3"></a>3.split-3</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">--split-3                        3-way splitting for mate-pairs. For each </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">                                   spot, if there are two biological reads </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">                                   satisfying filter conditions, the first is </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">                                   placed in the &#96;*_1.fastq&#96; file, and the </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">                                   second is placed in the &#96;*_2.fastq&#96; file. If </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">                                   there is only one biological read </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">                                   satisfying the filter conditions, it is </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">                                   placed in the &#96;*.fastq&#96; file.All other </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">                                   reads in the spot are ignored.</span></pre></td></tr></table></figure>
+
+<p>–split-3 separates the read into left and right ends, but if there is a left end <em>without a matching</em> right end, or a right end <em>without a matching</em> left end, they will be put in a single file.</p>
+<h1 id="质控-QC"><a href="#质控-QC" class="headerlink" title="质控(QC)"></a>质控(QC)</h1><p>质控包括以下三个步骤：</p>
+<p>1.利用fastqc对质量进行检验</p>
+<p>2.数据清理，包括：低质量reads的清除，adapter trimming ,  污染物reads的清除</p>
+<p>3.再利用fastqc对质量进行检验</p>
+<img src="C:\Users\52466\AppData\Roaming\Typora\typora-user-images\1568107878902.png" alt="1568107878902" style="zoom:25%;" align=left />
+
+<h2 id="Fastqc"><a href="#Fastqc" class="headerlink" title="Fastqc"></a>Fastqc</h2><p>关于fastqc的具体内容请见 <a href="C:\Users\52466\OneDrive\文档\typora\fastqc.md">fastqc</a> .</p>
+<h2 id="trim-galore"><a href="#trim-galore" class="headerlink" title="trim_galore"></a>trim_galore</h2><h3 id="step-1-Quality-Trimming"><a href="#step-1-Quality-Trimming" class="headerlink" title="step 1 Quality Trimming"></a>step 1 Quality Trimming</h3><p>In the first step, low-quality base calls are trimmed off from the 3’ end of the reads before adapter removal. This efficiently removes poor quality portions of the reads.</p>
+<p><img src="C:%5CUsers%5C52466%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1568117867231.png" alt="1568117867231"></p>
+<h3 id="step-2-Adapter-Trimming-trim-galore"><a href="#step-2-Adapter-Trimming-trim-galore" class="headerlink" title="step 2  Adapter Trimming (trim_galore)"></a>step 2  Adapter Trimming (trim_galore)</h3><p>Cutadapt finds and removes adapter sequences from the 3’ end of reads.</p>
+<blockquote>
+<p>为什么只有3’的adapter？</p>
+<p>因为5’的primer在测序过程中并没有读入（没有合成）。3‘有adapter的序列是因为合成过头了。</p>
+</blockquote>
+<p><img src="C:%5CUsers%5C52466%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1568107825145.png" alt="a"></p>
+<h4 id="adapter-自动检测"><a href="#adapter-自动检测" class="headerlink" title="adapter 自动检测"></a>adapter 自动检测</h4><p>如果未提供序列则采用自动检测。</p>
+<p>it will analyse the first 1 million sequences of the first specified file and attempt to find the first 12 or 13bp of the following standard adapters:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Illumina:   AGATCGGAAGAGC</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">Small RNA:  TGGAATTCTCGG</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">Nextera:    CTGTCTCTTATA</span></pre></td></tr></table></figure>
+
+<p>如果三者都有出现，选择Illumina，如果出现Small RNA，Nextera两种，选择Nextera。</p>
+<h4 id="手动检测"><a href="#手动检测" class="headerlink" title="手动检测"></a>手动检测</h4><p><code>--illumina</code>, <code>--nextera</code> ,<code>--small_rna</code></p>
+<p>或者指定一段序列。</p>
+<h4 id="关于-stringency-参数"><a href="#关于-stringency-参数" class="headerlink" title="关于 stringency 参数"></a>关于 <code>stringency</code> 参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">--stringency &lt;INT&gt;      Overlap with adapter sequence required to trim a sequence.Default                         to a very stringent setting of 1, i.e. even a single bp of                               overlapping sequence will be trimmed off from the 3&#39; end of any                           read.</span></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="C:%5CUsers%5C52466%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1568120042088.png" alt=""></p>
+<p> <code>stringency</code>  的参数决定了在最后面的序列，需要多少位与illumina adapter重合才会被trim掉。</p>
+<p>但是如果符合full match，即使不是在最后面，full match的序列包括后面的序列都会被trim掉。</p>
+<h4 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h4><p><code>-q/--quality &lt;INT&gt;</code></p>
+<p>当碱基质量分数小于该值的时候，就会被trim掉。</p>
+<p><code>--phred33</code></p>
+<p>Instructs Cutadapt to use <code>ASCII+33</code> quality scores as Phred scores (Sanger/Illumina 1.9+ encoding) for quality trimming.</p>
+<p><code>--fastqc</code></p>
+<p>结束之后跑fastqc</p>
+<p><code>-a/--adapter &lt;STRING&gt;</code></p>
+<p>指定adapter序列或者类型</p>
+<p><code>-a2/--adapter2 &lt;STRING&gt;</code></p>
+<p>Optional adapter sequence to be trimmed off read 2 of paired-end files. This option requires <code>--paired</code> to be specified as well. </p>
+<p><code>--max_length &lt;INT&gt;</code></p>
+<p>仅推荐在small rna中舍弃掉非small rna的序列而使用。</p>
+<p><code>s/--stringency &lt;INT&gt;</code></p>
+<p><code>-e &lt;ERROR RATE&gt;</code></p>
+<p>默认值0.1，比如说adapter在最后十位重合，除了一个碱基以外，这时候我们也认为adapter匹配，需要被trim掉。</p>
+<p><code>--gzip</code></p>
+<p><code>--length &lt;INT&gt;</code></p>
+<p>Discard reads that became shorter than length INT because of either quality or adapter trimming. A value of <code>0</code> effectively disables this behaviour.</p>
+<p>paired-end怎么办？</p>
+<p><code>--paired</code>：如果有一个不符合的，那么两个都会被舍弃掉。</p>
+<p><code>--retain_unpaired</code>：即使有一个不符合，也保留符合的另一半。</p>
+<p><code>--max_n COUNT</code></p>
+<p>N的个数达到多少，整个序列就会被移除掉，在 <code>--paired</code> 条件下一个不符合另一个也会被移除。</p>
+<p><code>--trim-n</code></p>
+<p>把序列两端的N移去</p>
+<p><code>-o</code></p>
+<p>输出位置</p>
+<p><code>--suppress_warn</code></p>
+<p>闭嘴状态</p>
+<p><code>--clip_R1 &lt;int&gt;</code></p>
+<p>移除掉read1 5’端若干个bp的碱基，当5’端质量很低的时候用得上。</p>
+<p><code>--clip_R2 &lt;int&gt;</code></p>
+<p>同理</p>
+<p><code>--three_prime_clip_R1 &lt;int&gt;</code></p>
+<p>Instructs Trim Galore to remove <code>&lt;int&gt;</code> bp from the 3’ end of read 1 (or single-end reads) <em>AFTER</em> adapter/quality trimming has been performed. This may remove some unwanted bias from the 3’ end that is not directly related to adapter sequence or basecall quality.</p>
+<p><code>--three_prime_clip_R2 &lt;int&gt;</code></p>
+<p>同理</p>
+<p><code>--2colour/--nextseq INT</code></p>
+<p>对于某些特殊的平台有用，比如 NextSeq- and NovaSeq-platforms</p>
+<p>This enables the option <code>--nextseq-trim=3&#39;CUTOFF</code> within Cutadapt, which will set a quality cutoff (that is normally given with -q instead), but qualities of G bases are ignored. This trimming is in common for the NextSeq- and NovaSeq-platforms, where basecalls without any signal are called as high-quality G bases. More on the issue of G-overcalling may be found here: <a href="https://sequencing.qcfail.com/articles/illumina-2-colour-chemistry-can-overcall-high-confidence-g-bases/" target="_blank" rel="noopener">https://sequencing.qcfail.com/articles/illumina-2-colour-chemistry-can-overcall-high-confidence-g-bases/</a>. This is mutually exlusive with <code>-q INT</code>.</p>
+<p><code>--path_to_cutadapt</code></p>
+<p>指定路径</p>
+<p><code>--basename</code></p>
+<p>命名</p>
+<p><code>-j</code></p>
+<p>Number of cores to be used for trimming .</p>
+<p><code>--clock</code></p>
+<p>对个例有用，详细见：<a href="https://doi.org/10.1186/s13059-017-1203-5" target="_blank" rel="noopener">https://doi.org/10.1186/s13059-017-1203-5</a></p>
+<p><code>-t/--trim1</code></p>
+<p>对bowtie1可能有用，因为两个reads如果是包含关系对于bowtie1是无效的。（?）</p>
+<p><code>--retain_unpaired</code></p>
+<ul>
+<li>If only one of the two paired-end reads became too short, the longer read will be written to either <code>.unpaired_1.fq</code> or <code>.unpaired_2.fq</code> output files. The length cutoff for unpaired single-end reads is governed by the parameters <code>-r1</code>/<code>--length_1</code> and <code>-r2</code>/<code>--length_2</code>.</li>
+<li>Default: <code>OFF</code>.</li>
+</ul>
+<p><code>-r1/--length_1 &lt;INT&gt;</code></p>
+<ul>
+<li>Unpaired single-end read length cutoff needed for read 1 to be written to <code>.unpaired_1.fq</code> output file. These reads may be mapped in single-end mode.</li>
+<li>Default: <code>35 bp</code></li>
+</ul>
+<p><code>-r2/--length_2 &lt;INT&gt;</code></p>
+<ul>
+<li>Unpaired single-end read length cutoff needed for read 2 to be written to <code>.unpaired_2.fq</code> output file. These reads may be mapped in single-end mode.</li>
+<li>Default: <code>35 bp</code> </li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/07/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86-AWK/" rel="next" title="文本处理-AWK">
+                <i class="fa fa-chevron-left"></i> 文本处理-AWK
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需要下载的软件"><span class="nav-number">1.</span> <span class="nav-text">需要下载的软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载SRA数据"><span class="nav-number">2.</span> <span class="nav-text">下载SRA数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据转换：关于fastq-dump"><span class="nav-number">3.</span> <span class="nav-text">数据转换：关于fastq-dump</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是fastq-dump？"><span class="nav-number">3.1.</span> <span class="nav-text">什么是fastq-dump？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在Sra文件中什么是spot？"><span class="nav-number">3.2.</span> <span class="nav-text">在Sra文件中什么是spot？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#split-3-split-file-split-spot-的区别"><span class="nav-number">3.3.</span> <span class="nav-text">split-3,split-file,split-spot 的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-split-spot"><span class="nav-number">3.3.1.</span> <span class="nav-text">1.split-spot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-split-file-不推荐"><span class="nav-number">3.3.2.</span> <span class="nav-text">2.split-file(不推荐)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-split-3"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.split-3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#质控-QC"><span class="nav-number">4.</span> <span class="nav-text">质控(QC)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fastqc"><span class="nav-number">4.1.</span> <span class="nav-text">Fastqc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trim-galore"><span class="nav-number">4.2.</span> <span class="nav-text">trim_galore</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step-1-Quality-Trimming"><span class="nav-number">4.2.1.</span> <span class="nav-text">step 1 Quality Trimming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-2-Adapter-Trimming-trim-galore"><span class="nav-number">4.2.2.</span> <span class="nav-text">step 2  Adapter Trimming (trim_galore)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#adapter-自动检测"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">adapter 自动检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#手动检测"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">手动检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于-stringency-参数"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">关于 stringency 参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他参数"><span class="nav-number">4.2.2.4.</span> <span class="nav-text">其他参数</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
