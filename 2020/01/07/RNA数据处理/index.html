@@ -86,15 +86,15 @@
 <meta property="og:site_name" content="hongfox&#39;s blog">
 <meta property="og:description" content="需要下载的软件先conda create创建新环境，在新环境中进行工具的下载，conda解决一切环境问题。     下载SRA数据根据文章提供的GEO ID找到SRA的ID，再利用sra-tools的prefetch或者wget下载得到数据。 实际上更直接的方式是直接在ENA找到FASTQ文件。 数据转换：关于fastq-dump什么是fastq-dump？一个把sra文件转化为fastq格式的工">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="c:&#x2F;Users&#x2F;52466&#x2F;blog&#x2F;blog&#x2F;source&#x2F;1568019839906.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;pbs.twimg.com&#x2F;media&#x2F;ENrrz0GUcAMH-U3?format&#x3D;png&amp;name&#x3D;small">
 <meta property="og:image" content="http:&#x2F;&#x2F;learn.gencore.bio.nyu.edu&#x2F;wp-content&#x2F;uploads&#x2F;2018&#x2F;01&#x2F;Screen-Shot-2018-01-07-at-4.20.44-PM-1024x624.png">
-<meta property="og:image" content="c:&#x2F;Users&#x2F;52466&#x2F;blog&#x2F;blog&#x2F;source&#x2F;1568107878902.png">
-<meta property="og:image" content="c:%5CUsers%5C52466%5Cblog%5Cblog%5Csource%5C1568117867231.png">
-<meta property="og:image" content="c:%5CUsers%5C52466%5Cblog%5Cblog%5Csource%5C1568107825145.png">
-<meta property="og:image" content="c:%5CUsers%5C52466%5Cblog%5Cblog%5Csource%5C1568120042088.png">
-<meta property="og:updated_time" content="2020-01-07T13:29:14.784Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;pbs.twimg.com&#x2F;media&#x2F;ENrrz0JU0AAVovb?format&#x3D;png&amp;name&#x3D;medium">
+<meta property="og:image" content="https:&#x2F;&#x2F;pbs.twimg.com&#x2F;media&#x2F;ENrrz0HVUAA6ndt?format&#x3D;png&amp;name&#x3D;large">
+<meta property="og:image" content="https:&#x2F;&#x2F;pbs.twimg.com&#x2F;media&#x2F;ENrrz0JUwAAR3bt?format&#x3D;jpg&amp;name&#x3D;small">
+<meta property="og:image" content="https:&#x2F;&#x2F;pbs.twimg.com&#x2F;media&#x2F;ENrsYN0UcAEDusW?format&#x3D;png&amp;name&#x3D;medium">
+<meta property="og:updated_time" content="2020-01-07T13:43:42.555Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:&#x2F;Users&#x2F;52466&#x2F;blog&#x2F;blog&#x2F;source&#x2F;1568019839906.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;pbs.twimg.com&#x2F;media&#x2F;ENrrz0GUcAMH-U3?format&#x3D;png&amp;name&#x3D;small">
 
 
 
@@ -305,7 +305,7 @@
 
       
         <h1 id="需要下载的软件"><a href="#需要下载的软件" class="headerlink" title="需要下载的软件"></a>需要下载的软件</h1><p>先conda create创建新环境，在新环境中进行工具的下载，conda解决一切环境问题。</p>
-<img src="C:\Users\52466\blog\blog\source\1568019839906.png" alt="1568019839906" align=left />
+<img src="https://pbs.twimg.com/media/ENrrz0GUcAMH-U3?format=png&name=small" alt="1568019839906" align=left />
 
 
 
@@ -336,17 +336,17 @@
 <p>1.利用fastqc对质量进行检验</p>
 <p>2.数据清理，包括：低质量reads的清除，adapter trimming ,  污染物reads的清除</p>
 <p>3.再利用fastqc对质量进行检验</p>
-<img src="C:\Users\52466\blog\blog\source\1568107878902.png" alt="1568107878902" style="zoom:25%;" align=left />
+<img src="https://pbs.twimg.com/media/ENrrz0JU0AAVovb?format=png&name=medium" align=left />
 
 <h2 id="Fastqc"><a href="#Fastqc" class="headerlink" title="Fastqc"></a>Fastqc</h2><p>关于fastqc的具体内容请见 <a href="C:\Users\52466\OneDrive\文档\typora\fastqc.md">fastqc</a> .</p>
 <h2 id="trim-galore"><a href="#trim-galore" class="headerlink" title="trim_galore"></a>trim_galore</h2><h3 id="step-1-Quality-Trimming"><a href="#step-1-Quality-Trimming" class="headerlink" title="step 1 Quality Trimming"></a>step 1 Quality Trimming</h3><p>In the first step, low-quality base calls are trimmed off from the 3’ end of the reads before adapter removal. This efficiently removes poor quality portions of the reads.</p>
-<p><img src="C:%5CUsers%5C52466%5Cblog%5Cblog%5Csource%5C1568117867231.png" alt="1568117867231"></p>
+<p><img src="https://pbs.twimg.com/media/ENrrz0HVUAA6ndt?format=png&name=large" alt="1568117867231"></p>
 <h3 id="step-2-Adapter-Trimming-trim-galore"><a href="#step-2-Adapter-Trimming-trim-galore" class="headerlink" title="step 2  Adapter Trimming (trim_galore)"></a>step 2  Adapter Trimming (trim_galore)</h3><p>Cutadapt finds and removes adapter sequences from the 3’ end of reads.</p>
 <blockquote>
 <p>为什么只有3’的adapter？</p>
 <p>因为5’的primer在测序过程中并没有读入（没有合成）。3‘有adapter的序列是因为合成过头了。</p>
 </blockquote>
-<p><img src="C:%5CUsers%5C52466%5Cblog%5Cblog%5Csource%5C1568107825145.png" alt="a"></p>
+<p><img src="https://pbs.twimg.com/media/ENrrz0JUwAAR3bt?format=jpg&name=small" alt="a"></p>
 <h4 id="adapter-自动检测"><a href="#adapter-自动检测" class="headerlink" title="adapter 自动检测"></a>adapter 自动检测</h4><p>如果未提供序列则采用自动检测。</p>
 <p>it will analyse the first 1 million sequences of the first specified file and attempt to find the first 12 or 13bp of the following standard adapters:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Illumina:   AGATCGGAAGAGC</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">Small RNA:  TGGAATTCTCGG</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">Nextera:    CTGTCTCTTATA</span></pre></td></tr></table></figure>
@@ -360,7 +360,7 @@
 
 
 
-<p><img src="C:%5CUsers%5C52466%5Cblog%5Cblog%5Csource%5C1568120042088.png" alt=""></p>
+<p><img src="https://pbs.twimg.com/media/ENrsYN0UcAEDusW?format=png&name=medium" alt=""></p>
 <p> <code>stringency</code>  的参数决定了在最后面的序列，需要多少位与illumina adapter重合才会被trim掉。</p>
 <p>但是如果符合full match，即使不是在最后面，full match的序列包括后面的序列都会被trim掉。</p>
 <h4 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h4><p><code>-q/--quality &lt;INT&gt;</code></p>
